@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Log in</title>
+  <link rel="stylesheet" href="/assets/mytodostyles.css">
+</head>
+<body>
+<main class="app">
+
+  <header class="top au-top">
+    <div class="au-logo">✓</div>
+    <h1 class="au-title">My Tasks</h1>
+    <p class="au-sub">Welcome back. Log in to see your tasks.</p>
+  </header>
+
+  <form class="au-card" action="/login" method="post">
+
+    <div class="au-field">
+      <label class="au-label" for="au-email">Email</label>
+      <input class="au-input" id="au-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+    </div>
+
+    <div class="au-field">
+      <label class="au-label" for="au-pass">Password</label>
+      <input class="au-input" id="au-pass" type="password" name="password" placeholder="Your password" autocomplete="current-password" required>
+    </div>
+
+    <div class="au-row">
+      <label class="au-check"><input type="checkbox" name="remember"> Remember me</label>
+      <a class="au-link" href="forgot-password">Forgot password?</a>
+    </div>
+
+    <button class="au-button" type="submit">Log in</button>
+
+    <p class="au-switch">New here? <a class="au-link" href="signup">Create an account</a></p>
+
+  </form>
+</main>
+</body>
+</html>

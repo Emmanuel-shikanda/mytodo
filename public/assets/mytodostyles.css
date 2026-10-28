@@ -87,25 +87,51 @@ h2 { margin: 24px 0 14px; font-weight: 500; }
 /* Task list */
 ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 
+
 .task {
   display: grid;
-  grid-template-columns: 72px 1fr 22px;
+  grid-template-columns: 82px 1fr auto;   /* time | text | trash + checkbox */
   gap: 10px;
   align-items: center;
   background: var(--tint);
   border-radius: 10px;
   padding: 14px;
+}
+
+.task time {
+  font-size: .7rem;         /* was .75rem, a little smaller */
+  white-space: nowrap;      /* keeps "10:00 – 11:00" on one line */
+}
+
+.task span {
+  display: flex;
+  flex-direction: column;     /* stack top to bottom */
+  gap: 2px;
+}
+
+
+.del {
+  background: none;     /* no box colour */
+  border: 0;            /* no outline */
+  padding: 0;  
+  margin-bottom:20px;         /* no extra space around the icon */
+  cursor: pointer;
+  line-height: 0;
+}
+.del:hover { background: none; }      /* no box appears on hover */
+
+.icon-trash{
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 }
-.task time { font-size: .75rem; }
-.task strong { display: block; font-weight: 600; }
-.task small { color: var(--muted); }
-.task.on { background: var(--main); color: #fff; }
 
-.task:hover { background: var(--main); color: #fff; }
-
-.task.on small { color: #e6d9fb; }
-
+.icon-trash-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
 /* Checkbox */
 input {
   appearance: none;
@@ -423,27 +449,17 @@ a.add { text-decoration: none; }
   height: 26px;
 }
 
-
-
 /* ---------- Profile page ---------- */
-.pf-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  background: var(--card);
-  border: 1.5px solid var(--line);
-  border-bottom: 0;
-  border-radius: 28px 28px 0 0;
-  padding: 24px 20px 110px;          /* extra bottom space for the phone navbar */
-}
 
-/* Avatar and name */
+/* Phone: photo + email sit under the top bar */
+.pf-top { padding-bottom: 28px; }
+
 .pf-user {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
+  margin-top: 20px;
   text-align: center;
 }
 .pf-avatar {
@@ -453,15 +469,26 @@ a.add { text-decoration: none; }
   place-items: center;
   border-radius: 50%;
   border: 4px solid var(--line);
-  background: var(--main);
+  background: #010427;
   color: #fff;
   font-size: 2rem;
   font-weight: 600;
 }
-.pf-name { margin: 8px 0 0; font-size: 1.3rem; font-weight: 600; color: var(--text); }
-.pf-email { margin: 0; font-size: .9rem; color: var(--muted); }
+.pf-email { margin: 0; font-size: .95rem; color: #fff; }
 
-/* Three number boxes */
+/* Phone: the card holds stats, details and buttons */
+.pf-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-bottom: 0;
+  border-radius: 28px 28px 0 0;
+  padding: 24px 20px 110px;           /* extra bottom space for the phone navbar */
+}
+
 .pf-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .pf-stat {
   padding: 14px 0;
@@ -473,7 +500,6 @@ a.add { text-decoration: none; }
 }
 .pf-stat b { display: block; font-size: 1.5rem; color: var(--main); }
 
-/* Details list */
 .pf-list {
   list-style: none;
   margin: 0;
@@ -492,18 +518,11 @@ a.add { text-decoration: none; }
 .pf-list li + li { border-top: 1.5px solid var(--line); }
 .pf-list span { color: var(--muted); }
 
-/* Buttons */
-.pf-actions {
-   display:flex;
-   gap: 12px;
-   justify-content: center;
-   
-  }
+.pf-actions { display: grid; gap: 12px; }
 .pf-btn {
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 50px;
+  min-height: 50px;
   border: 1.5px solid var(--main);
   border-radius: 14px;
   background: var(--main);
@@ -511,33 +530,266 @@ a.add { text-decoration: none; }
   font-weight: 600;
   text-decoration: none;
 }
-.pf-btn-light { background: #b80505; color: white; border: 1.5px solid red;}
+.pf-btn-light { background: red; color: #fff; border-color: red; }
 
-/* ---------- Desktop layout: two columns ---------- */
+/* ---------- Desktop: left = photo + email, right = blocks ---------- */
 @media (min-width: 800px) {
+  .pf-top {
+    flex: 1;
+    justify-content: center;            /* centre everything in the left panel */
+    align-items: center;
+    gap: 28px;
+    padding: 32px;
+    text-align: center;
+    border-right: 1.5px solid var(--line);
+  }
+  .pf-top .bar { display: none; }       /* the menu button replaces it */
+  .pf-top .big { font-size: 2rem; }
+  .pf-user { margin-top: 0; }
+  .pf-avatar { width: 140px; height: 140px; font-size: 3rem; }
+
   .pf-card {
     flex: 1.5;
-    display: grid;
-    grid-template-columns: 1fr 1fr;      /* two equal columns */
-    gap: 32px;
-    align-content: start;
+    gap: 20px;
+    justify-content: center;
     border: 0;
-    border-left: 1.5px solid var(--line);
     border-radius: 0;
     padding: 40px;
   }
+  .pf-actions { grid-template-columns: 1fr 1fr; }   /* two buttons side by side */
+}
+
+
+/* ---------- Edit Profile page ---------- */
+
+/* "Change photo" button under the avatar */
+.ep-photo {
+  padding: 5px 10px;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  background: #fff;
+  color: var(--main);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.ep-photo:hover { border-color: var(--main); }
+
+.ep-photo input { width: 34%; height: 50%; opacity: 2; cursor: pointer; }   /* hide the file input, clicking the label opens the file picker */
+
+/* Phone: white card with the form */
+.ep-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-bottom: 0;
+  border-radius: 28px 28px 0 0;
+  padding: 24px 20px 110px;           /* extra bottom space for the phone navbar */
+}
+
+.ep-field { display: flex; flex-direction: column; gap: 8px; }
+
+.ep-label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ep-input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: rgb(1, 4, 43);
+  font: inherit;
+  font-size: 1rem;
+  color-scheme: light;
+  transition: border-color .2s;
 }
 
 
 
+.ep-input::placeholder { color: var(--muted); opacity: .7; }
+.ep-input:focus { outline: 0; border-color: var(--main); }
+
+.ep-textarea { min-height: 110px; padding: 14px 16px; resize: vertical; }
+
+/* Buttons */
+.ep-actions { display: grid; gap: 12px; margin-top: 4px; }
+
+.ep-save,
+.ep-cancel {
+  display: grid;
+  place-items: center;
+  min-height: 52px;
+  border: 1.5px solid var(--main);
+  border-radius: 14px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter .2s;
+}
+.ep-save { background: var(--main); color: #fff; }
+.ep-save:hover { filter: brightness(1.15); }
+.ep-cancel { background: red; color: #fff;border-color: red; }
+
+/* ---------- Desktop: left = photo, right = form ---------- */
+@media (min-width: 800px) {
+  .ep-form {
+    flex: 1.5;
+    justify-content: center;
+    border: 0;
+    border-radius: 0;
+    padding: 40px;
+  }
+  .ep-actions { grid-template-columns: 1fr 1fr; }   /* two buttons side by side */
+}
 
 
+/* ---------- Login and Sign up pages ---------- */
+
+/* Top part: logo, title, short text */
+.au-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 20px 40px;
+  text-align: center;
+}
+.au-logo {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: var(--main);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.au-title { margin: 12px 0 0; font-size: 1.8rem; font-weight: 600; }
+.au-sub { margin: 0; font-size: .9rem; color: var(--muted); }
+
+/* Phone: white card with the form */
+.au-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-bottom: 0;
+  border-radius: 28px 28px 0 0;
+  padding: 28px 20px 40px;
+}
+
+.au-field { display: flex; flex-direction: column; gap: 8px; }
+.au-label { font-size: .8rem; font-weight: 600; color: var(--muted); }
+
+.au-input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  transition: border-color .2s;
+}
+.au-input::placeholder { color: var(--muted); opacity: .7; }
+.au-input:focus { outline: 0; border-color: var(--main); }
+
+/* Remember me + forgot password */
+.au-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.au-check { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--muted); }
+
+/* Button */
+.au-button {
+  min-height: 52px;
+  border: 1.5px solid var(--main);
+  border-radius: 14px;
+  background: var(--main);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter .2s;
+}
+.au-button:hover { filter: brightness(1.15); }
+
+/* Links */
+.au-link { color: var(--main); font-size: .85rem; font-weight: 600; text-decoration: none; }
+.au-link:hover { text-decoration: underline; }
+.au-switch { margin: 0; text-align: center; font-size: .9rem; color: var(--muted); }
+.au-switch .au-link { font-size: inherit; }
+
+/* ---------- Desktop: left = welcome, right = form ---------- */
+@media (min-width: 800px) {
+  .au-top {
+    flex: 1;
+    justify-content: center;
+    padding: 40px;
+    border-right: 1.5px solid var(--line);
+  }
+  .au-logo { width: 90px; height: 90px; font-size: 2.6rem; border-radius: 26px; }
+  .au-title { font-size: 2.4rem; }
+  .au-sub { font-size: 1rem; max-width: 280px; }
+
+  .au-card {
+    flex: 1.2;
+    justify-content: center;
+    border: 0;
+    border-radius: 0;
+    padding: 48px;
+  }
+}
 
 
+/* ---------- Forgot password page ---------- */
+
+/* Message shown after the link is sent (your backend adds it to the page) */
+.au-note {
+  margin: 0;
+  padding: 12px 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  color: var(--main);
+  font-size: .9rem;
+  text-align: center;
+}
+
+/* Keeps the short text from stretching too wide on desktop */
+.au-sub { max-width: 320px; }
 
 
+/* ---------- Verification code page ---------- */
+.au-code {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: .5em;        /* spreads the digits apart */
+  padding-left: calc(16px + .5em);   /* keeps the digits centred */
+}
+.au-code::placeholder { letter-spacing: .5em; }
 
-
+.au-sub{
+color: white;
+}
 
 
 

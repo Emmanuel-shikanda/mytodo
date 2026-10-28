@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="/assets/mytodostyles.css">
+</head>
+<body>
+
+<!-- Navbar (same as your other pages) -->
+   <%- include('partials/navbar') %>
+
+<main class="app">
+
+  <!-- Left side on desktop: photo -->
+  <header class="top pf-top">
+    <div class="bar">
+      <a href="profile.html">←</a>
+      <strong>Edit Profile</strong>
+      <span></span>
+    </div>
+
+    <h1 class="big">Edit Profile</h1>
+
+    <div class="pf-user">
+      <div class="pf-avatar">JD</div>
+      <label class="ep-photo">
+        Change photo
+        <input type="file" name="photo" accept="image/*" form="ep-form"  id="ep-pic" hidden>
+      </label>
+    </div>
+  </header>
+
+  <!-- Right side on desktop: form -->
+  <form class="ep-form" id="ep-form" action="/profile" method="post" enctype="multipart/form-data">
+
+    <div class="ep-field">
+      <label class="ep-label" for="ep-name">Full name</label>
+      <input class="ep-input" id="ep-name" type="text" name="name" placeholder="John Doe" required>
+    </div>
+
+    <div class="ep-field">
+      <label class="ep-label" for="ep-email">Email</label>
+      <input class="ep-input" id="ep-email" type="email" name="email" placeholder="john@example.com" required>
+    </div>
+
+    <div class="ep-field">
+      <label class="ep-label" for="ep-phone">Phone</label>
+      <input class="ep-input" id="ep-phone" type="tel" name="phone" placeholder="+254 700 000 000">
+    </div>
+
+    <div class="ep-field">
+      <label class="ep-label" for="ep-about">About you</label>
+      <textarea class="ep-input ep-textarea" id="ep-about" name="about" placeholder="Write something short..."></textarea>
+    </div>
+
+    <div class="ep-actions">
+      <button class="ep-save" type="submit">Save Changes</button>
+      <a class="ep-cancel" href="profile">Cancel</a>
+    </div>
+
+  </form>
+</main>
+
+</body>
+</html>

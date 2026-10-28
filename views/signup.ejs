@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sign up</title>
+  <link rel="stylesheet" href="/assets/mytodostyles.css">
+</head>
+<body>
+<main class="app">
+
+  <header class="top au-top">
+    <div class="au-logo">✓</div>
+    <h1 class="au-title">Create account</h1>
+    <p class="au-sub">Sign up and start planning your day.</p>
+  </header>
+
+  <form class="au-card" action="/signup" method="post">
+
+    <div class="au-field">
+      <label class="au-label" for="su-name">Full name</label>
+      <input class="au-input" id="su-name" type="text" name="name" placeholder="John Doe" autocomplete="name" required>
+    </div>
+
+    <div class="au-field">
+      <label class="au-label" for="su-email">Email</label>
+      <input class="au-input" id="su-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+    </div>
+
+    <div class="au-field">
+      <label class="au-label" for="su-pass">Password</label>
+      <input class="au-input" id="su-pass" type="password" name="password" placeholder="At least 8 characters" minlength="8" autocomplete="new-password" required>
+    </div>
+
+    <div class="au-field">
+      <label class="au-label" for="su-confirm">Confirm password</label>
+      <input class="au-input" id="su-confirm" type="password" name="confirm" placeholder="Repeat your password" minlength="8" autocomplete="new-password" required>
+    </div>
+
+    <button class="au-button" type="submit">Sign up</button>
+
+    <p class="au-switch">Already have an account? <a class="au-link" href="login">Log in</a></p>
+
+  </form>
+</main>
+</body>
+</html>
