@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create Task</title>
+  <link rel="stylesheet" href="/assets/mytodostyles.css">
+</head>
+<body>
+<main class="app light">
+
+
+   <%- include('partials/navbar') %>
+
+  <header class="top">
+    <div class="bar">
+      <a href="todo"><img src="/assets/img/icons8-back-arrow-100.png" alt="back"class="icon"></a>
+      <strong>Create Task</strong>
+      <span><img src="/assets/img/icons8-clock-100.png" alt="clock" class="icon"></span>
+    </div>
+    <h1 class="big">New task</h1>
+  </header>
+
+  <form class="ct-card" action="/tasks" method="post">
+
+  <h2 class="ct-title">Task details</h2>
+
+  <div class="ct-field">
+    <label class="ct-label" for="ct-date">Date</label>
+    <input class="ct-input" id="ct-date" type="date" name="date" required>
+  </div>
+
+  <div class="ct-split">
+    <div class="ct-field">
+      <label class="ct-label" for="ct-start">Start time</label>
+      <input class="ct-input" id="ct-start" type="time" name="start" required>
+    </div>
+    <div class="ct-field">
+      <label class="ct-label" for="ct-end">End time</label>
+      <input class="ct-input" id="ct-end" type="time" name="end" required>
+    </div>
+  </div>
+
+  <div class="ct-field">
+    <label class="ct-label" for="ct-name">Task name</label>
+    <input class="ct-input" id="ct-name" type="text" name="title" placeholder="e.g. Team meeting" required>
+  </div>
+
+  <div class="ct-field">
+    <label class="ct-label" for="ct-desc">Description</label>
+    <textarea class="ct-input ct-textarea" id="ct-desc" name="description" placeholder="Add a short note..."></textarea>
+  </div>
+
+  <button class="ct-button" type="submit">Create Task</button>
+
+</form>
+
+
+</main>
+</body>
+</html>

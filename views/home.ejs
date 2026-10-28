@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Tasks</title>
+  <link rel="stylesheet" href="/assets/mytodostyles.css">
+</head>
+<body>
+<main class="app">
+
+  
+   <%- include('partials/navbar') %>
+
+  <header class="top">
+    <div class="bar"><span><img src="/assets/img/icons8-calender-85.png" alt="calendar" class="icon"></span><span>14 Sept</span><span><img src="/assets/img/icons8-clock-100.png" alt="clock" class="icon"></span></div>
+    <div class="hero">
+      <div><h1>Today</h1><p>6 Tasks</p></div>
+      
+<a class="add" href="create">Add New</a>
+    </div>
+  </header>
+
+  <section class="tasks">
+    <div class="days">
+      <div class="day on"><b>14</b>Mon</div>
+      <div class="day"><b>15</b>Tue</div>
+      <div class="day"><b>16</b>Wed</div>
+      <div class="day"><b>17</b>Thu</div>
+<div class="day"><b>18</b>Fri</div>
+<div class="day"><b>19</b>Sat</div>
+<div class="day"><b>20</b>Sun</div>
+<div class="day"><b>21</b>Mon</div>
+    </div>
+
+    <h2>My Tasks</h2>
+    <ul>
+      <li><label class="task"><time>8:00 – 7:30</time><span><strong>Fitness</strong><small>Exercise and gym</small></span><input type="checkbox" checked></label></li>
+      <li><label class="task"><time>7:30 – 8:00</time><span><strong>Check Emails and sms</strong><small>Review and respond to emails and SMS</small></span><input type="checkbox" checked></label></li>
+      <li><label class="task"><time>8:00 – 10:00</time><span><strong>Work on Projects</strong><small>Focus on all tasks related to Project</small></span><input type="checkbox" checked></label></li>
+      <li><label class="task on"><time>10:00 – 11:00</time><span><strong>Attend Meeting</strong><small>Team meeting with the client ABC</small></span><input type="checkbox"></label></li>
+      <li><label class="task"><time>11:00 – 13:00</time><span><strong>Work of XYZ</strong><small>Change theme and ideas in XYZ</small></span><input type="checkbox"></label></li>
+      <li><label class="task"><time>13:00 – 14:00</time><span><strong>Lunch Break</strong><small>Enjoy a healthy lunch and rest time</small></span><input type="checkbox"></label></li>
+    </ul>
+  </section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Profile</title>
+  <link rel="stylesheet" href="/assets/mytodostyles.css">
+</head>
+<body>
+
+
+<main class="app">
+
+    <%- include('partials/navbar') %>
+
+
+  <header class="top">
+    <div class="bar">
+      <a href="/todo">←</a>
+      <strong>Profile</strong>
+      <span></span>
+    </div>
+    <h1 class="big">My Profile</h1>
+  </header>
+
+  <section class="pf-card">
+
+    <!-- Avatar and name -->
+    <div class="pf-user">
+      <div class="pf-avatar">JD</div>
+      <h2 class="pf-name">John Doe</h2>
+      <p class="pf-email">john@example.com</p>
+    </div>
+
+    <!-- Task numbers -->
+    <div class="pf-stats">
+      <div class="pf-stat"><b>24</b>Total</div>
+      <div class="pf-stat"><b>18</b>Done</div>
+      <div class="pf-stat"><b>6</b>Pending</div>
+    </div>
+
+    <!-- Details -->
+    <ul class="pf-list">
+      <li><span>Name</span> John Doe</li>
+      <li><span>Email</span> john@example.com</li>
+      <li><span>Phone</span> +254 700 000 000</li>
+      <li><span>Joined</span> Oct 2026</li>
+    </ul>
+
+    <!-- Buttons -->
+    <div class="pf-actions">
+      <a class="pf-btn" href="#">Edit Profile</a>
+      <a class="pf-btn pf-btn-light" href="#">Log out</a>
+    </div>
+
+  </section>
+</main>
+
+</body>
+</html>
