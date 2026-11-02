@@ -36,24 +36,11 @@
   <form class="ep-form" id="ep-form" action="/profile" method="post" enctype="multipart/form-data">
 
     <div class="ep-field">
-      <label class="ep-label" for="ep-name">Full name</label>
+      <label class="ep-label" for="ep-name" id="namelbl">Full name</label>
       <input class="ep-input" id="ep-name" type="text" name="name" placeholder="John Doe" required>
     </div>
 
-    <div class="ep-field">
-      <label class="ep-label" for="ep-email">Email</label>
-      <input class="ep-input" id="ep-email" type="email" name="email" placeholder="john@example.com" required>
-    </div>
 
-    <div class="ep-field">
-      <label class="ep-label" for="ep-phone">Phone</label>
-      <input class="ep-input" id="ep-phone" type="tel" name="phone" placeholder="+254 700 000 000">
-    </div>
-
-    <div class="ep-field">
-      <label class="ep-label" for="ep-about">About you</label>
-      <textarea class="ep-input ep-textarea" id="ep-about" name="about" placeholder="Write something short..."></textarea>
-    </div>
 
     <div class="ep-actions">
       <button class="ep-save" type="submit">Save Changes</button>
@@ -62,6 +49,6 @@
 
   </form>
 </main>
-
+  <script src="/assets/edit.js"></script>
 </body>
 </html>

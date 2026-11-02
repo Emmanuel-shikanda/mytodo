@@ -11,10 +11,26 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
 
+const dns = require('node:dns');
+
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
+
+require('dotenv').config();
+
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI)
+.then(function(){
+console.log('MongoDB connected');
+})
+.catch(function(err) {
+    console.log("MongoDB not connected we are experiencing " + err.message)
+})
+
+
+
 todocontroller(app);
-
-
-
 
 
 

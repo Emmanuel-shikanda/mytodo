@@ -21,7 +21,7 @@
     <h1 class="big">New task</h1>
   </header>
 
-  <form class="ct-card" action="/tasks" method="post">
+  <form class="ct-card" action="/todo" method="post">
 
   <h2 class="ct-title">Task details</h2>
 
@@ -32,11 +32,11 @@
 
   <div class="ct-split">
     <div class="ct-field">
-      <label class="ct-label" for="ct-start">Start time</label>
+      <label id="ct-label-start" class="ct-label" for="ct-start">Start time</label>
       <input class="ct-input" id="ct-start" type="time" name="start" required>
     </div>
     <div class="ct-field">
-      <label class="ct-label" for="ct-end">End time</label>
+      <label id="ct-label-end" class="ct-label" for="ct-end">End time</label>
       <input class="ct-input" id="ct-end" type="time" name="end" required>
     </div>
   </div>
@@ -55,7 +55,9 @@
 
 </form>
 
-
 </main>
+
+<script src="/assets/createTask.js"></script>
+
 </body>
 </html>
