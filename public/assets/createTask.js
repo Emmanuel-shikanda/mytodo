@@ -69,7 +69,9 @@ form.addEventListener('submit', function(event) {
     let currentTime = `${currentHrs}:${currentMin}`;
 
 
-if(selectedStartTime < currentTime){
+    if(selectedDate === todayDate){
+
+       if(selectedStartTime < currentTime){
 
      event.preventDefault();
 
@@ -78,6 +80,10 @@ if(selectedStartTime < currentTime){
      endLbl.style.color = 'red';
 
      startLbl.textContent = 'choose a future time as start time';
+
+    }
+ 
+
 
     }
 

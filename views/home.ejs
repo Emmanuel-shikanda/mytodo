@@ -13,24 +13,17 @@
    <%- include('partials/navbar') %>
 
   <header class="top">
-    <div class="bar"><span><img src="/assets/img/icons8-calender-85.png" alt="calendar" class="icon"></span><span>14 Sept</span><span><img src="/assets/img/icons8-clock-100.png" alt="clock" class="icon"></span></div>
+    <div class="bar"><span><img src="/assets/img/icons8-calender-85.png" alt="calendar" class="icon"></span><span id="leo"></span><span><img src="/assets/img/icons8-clock-100.png" alt="clock" class="icon"></span></div>
     <div class="hero">
-      <div><h1>Today</h1><p>6 Tasks</p></div>
+    <div><h1>Today</h1><p>6 Tasks</p></div>
       
 <a class="add" href="create">Add New</a>
     </div>
   </header>
 
   <section class="tasks">
-    <div class="days">
-      <div class="day on"><b>14</b>Mon</div>
-      <div class="day"><b>15</b>Tue</div>
-      <div class="day"><b>16</b>Wed</div>
-      <div class="day"><b>17</b>Thu</div>
-<div class="day"><b>18</b>Fri</div>
-<div class="day"><b>19</b>Sat</div>
-<div class="day"><b>20</b>Sun</div>
-<div class="day"><b>21</b>Mon</div>
+    <div class="days" id="days">
+      
     </div>
 
     <h2>My Tasks</h2>
@@ -39,7 +32,7 @@
 
    <% todos.forEach(function(todo){ %>
         
-  <li class="task">
+  <li class="task" data-date="<%= todo.date %>" >
 
     <time> <%= todo.start %> – <%= todo.end %></time>
 
@@ -51,15 +44,12 @@
         <button class="del" type="submit" aria-label="Delete task"><img class="icon-trash" src="assets/img/icons8-trash-can-100.png" alt=""></button>
       </form>
 
-     <input type="checkbox"
-    <% if (todo.completed) { %>
-        checked
-    <% } else { %>
-
-    <% } %>
-
-    
-> 
+     <input 
+    type="checkbox"
+    class="complete-task"
+    data-id="<%= todo._id %>"
+    <%= todo.completed ? 'checked' : '' %>
+>
 
     </div>
 
@@ -72,5 +62,7 @@
   </section>
 
 </main>
+
+  <script src="/assets/home.js"></script>
 </body>
 </html>

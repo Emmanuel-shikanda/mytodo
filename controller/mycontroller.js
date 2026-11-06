@@ -30,7 +30,7 @@ app.post('/todo',function(req,res){
     console.log('you have this error' + err.message);
  })
 
-})
+});
 
 app.post('/todo/:id/delete',function(req,res){
 
@@ -43,8 +43,23 @@ app.post('/todo/:id/delete',function(req,res){
     })
 
 
+});
+
+app.post('/todo/:id/complete',function(req,res){
+
+Todo.findByIdAndUpdate(
+    req.params.id,
+    { completed: req.body.completed },
+)
+.then(function(){
+res.sendStatus(200)
+})
+.catch(function(err){
+console.log(err.message);
 })
 
+
+});
 
 
 

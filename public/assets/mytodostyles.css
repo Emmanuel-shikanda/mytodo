@@ -89,14 +89,29 @@ ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 
 
 .task {
-  display: grid;
-  grid-template-columns: 82px 1fr auto;   /* time | text | trash + checkbox */
-  gap: 10px;
-  align-items: center;
-  background: var(--tint);
-  border-radius: 10px;
-  padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 15px;
+    border-radius: 14px;
+    background: var(--tint);
 }
+
+.task span {
+    flex: 1;
+}
+
+.task-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-left: 20px;
+}
+
+
+
 
 .task time {
   font-size: .7rem;         /* was .75rem, a little smaller */
@@ -790,7 +805,10 @@ a.add { text-decoration: none; }
 .au-sub{
 color: white;
 }
-
+.day.today {
+  background-color: rgb(0, 145, 255);
+  color: white;
+}
 
 
 
