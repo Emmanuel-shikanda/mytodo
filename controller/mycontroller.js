@@ -42,7 +42,6 @@ app.post('/todo/:id/delete',function(req,res){
         console.log(`${err.message} has occured`);
     })
 
-
 });
 
 app.post('/todo/:id/complete',function(req,res){

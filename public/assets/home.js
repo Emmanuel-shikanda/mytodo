@@ -161,10 +161,30 @@ displayTodos(todayDate);
 
 
 
+function countTodayTodos(){
+
+  let todays = getTodayDate();
+
+  let num = 0;
+
+  tasks.forEach(function(task){
+
+if(task.dataset.date===todays){
+
+   num++;
+}
+
+  });
 
 
 
+let numberoftodos = document.getElementById('numberoftodos');
 
+numberoftodos.textContent=`${num} Tasks`
+
+}
+
+countTodayTodos();
 
 
 
