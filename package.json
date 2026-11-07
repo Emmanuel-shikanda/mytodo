@@ -1,4 +1,12 @@
 {
+  "name": "mytodo",
+  "version": "1.0.0",
+  "description": "My Todo application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
   "dependencies": {
     "dotenv": "^18.0.9",
     "ejs": "^7.0.2",
