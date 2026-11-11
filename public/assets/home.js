@@ -170,12 +170,10 @@ function countTodayTodos(){
   tasks.forEach(function(task){
 
 if(task.dataset.date===todays){
-
    num++;
 }
 
   });
-
 
 
 let numberoftodos = document.getElementById('numberoftodos');
