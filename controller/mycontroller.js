@@ -36,6 +36,7 @@ app.post('/todo/:id/delete',function(req,res){
 
     Todo.findByIdAndDelete(req.params.id)
     .then(function(){
+        console.log(req.params.id);
         res.redirect('/');
     })
     .catch(function(err){
