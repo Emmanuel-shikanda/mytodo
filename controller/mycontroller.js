@@ -62,9 +62,6 @@ console.log(err.message);
 });
 
 
-
-
-
 app.get('/create',function(req,res){
 
     res.render('creattask')
@@ -102,11 +99,7 @@ app.get('/editprofile',function(req,res){
 });
 
 
-app.get('/login',function(req,res){
 
-    res.render('login')
-
-});
 
 app.get('/signup',function(req,res){
 

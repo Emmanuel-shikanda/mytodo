@@ -17,6 +17,10 @@
 
   <form class="au-card" action="/signup" method="post">
 
+<% if (typeof error !== 'undefined') { %>
+    <p class="error-message"><%= error %></p>
+<% } %>
+
     <div class="au-field">
       <label class="au-label" for="su-name">Full name</label>
       <input class="au-input" id="su-name" type="text" name="name" placeholder="John Doe" autocomplete="name" required>

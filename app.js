@@ -2,7 +2,13 @@ let express = require('express');
 
 let todocontroller = require('./controller/mycontroller');
 
+let cookieParser = require('cookie-parser');
+
+
 let app = express();
+
+let auth =require('./authentication/authentication');
+
 
 app.set('view engine','ejs');
 
@@ -11,6 +17,8 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
 app.use(express.json());
+
+app.use(cookieParser())
 
 const dns = require('node:dns');
 
@@ -30,8 +38,44 @@ console.log('MongoDB connected');
 })
 
 
-
 todocontroller(app);
+
+app.use(auth);
+
+
+app.get('/create-cookie',function(req,res){
+
+    res.cookie('newUser',true,{
+    httpOnly:true
+    });
+
+    res.cookie('ismember',false,{
+      maxAge:86400000,
+      secure:true ,
+      httpOnly:true
+     
+
+    });
+
+    res.send('cookie-created')
+
+})
+
+app.get('/read-cookie',function(req,res){
+
+    let cookies = req.cookies;
+    console.log(cookies.newUser)
+
+    res.json(cookies)
+
+
+})
+
+
+
+
+
+
 
 
 const PORT = process.env.PORT || 3000;
