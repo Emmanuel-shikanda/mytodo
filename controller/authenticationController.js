@@ -246,7 +246,11 @@ let mailOptions = {
     text:`Click this link to rest your passwor: ${resetLink}`
 }
 
+console.log('abouttosendmail')
+
  await transpoter.sendMail(mailOptions);
+
+ console.log('user-saved')
 
 res.render('forgotpassword',{
     success:"password reset link sent to your Email"
@@ -283,7 +287,7 @@ error:'invalid or expired reset link please request another one.'
 
 if(foundUser.resetTokenExpires<Date.now()){
 
-    return res.render('forgopassword',{
+    return res.render('forgotpassword',{
    error:'your reset link has  expired please request another one'
 
     })
@@ -327,7 +331,7 @@ module.exports.verify_post =async function(req,res){
     }
 
     if(foundUser.resetTokenExpires<Date.now()){
-    return res.render('forgotten',{
+    return res.render('forgotpassword',{
         error:'your reset link has expired',
     })
 
@@ -338,7 +342,7 @@ module.exports.verify_post =async function(req,res){
 //reset-token
 
     foundUser.resetToken=undefined;
-    foundUser.resetTokenExpire=undefined;
+    foundUser.resetTokenExpires=undefined;
 
     await foundUser.save()
 
