@@ -236,7 +236,7 @@ forgettingUser.resetTokenExpires = resetTokenExpires;
 
 await forgettingUser.save();
 
-let resetLink = `${req.protocal}://${req.get('host')}/verify/${resetToken}`
+let resetLink = `${process.env.BASE_URL}/verify/${resetToken}`;
 
 
 let mailOptions = {
