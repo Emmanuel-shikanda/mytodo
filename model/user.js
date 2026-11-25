@@ -54,16 +54,68 @@ password:{
 role:{
     type:String,
     default:'member'
+},
+
+resetToken:{
+type:String,
+},
+
+resetTokenExpires:{
+type:Date
+
 }
+
+
+
+
+
 
 },{timestamps:true})
 
+
+//userSchem-static
+
+userSchema.statics.login=async function(email,password){
+
+    const user = await this.findOne({email:email});
+
+    if(user){
+
+        let auth = await bcrypt.compare(password,user.password);
+
+        if(auth){
+
+          return user
+
+        }
+      
+     throw Error('incorrect password')
+    }
+
+    throw Error("incorrect email or password")
+
+
+}
+
+
+
+
+
+
+
+
+
 userSchema.pre('save',async function(){
+
+if(!this.isModified('password')){
+    return
+}
+
     this.password = await bcrypt.hash(this.password,12);
     console.log("getting ready to save data");
 })
 
-userSchema.post('save',async function(){
+userSchema.post('save', async function(){
 console.log('user saved');
 })
 

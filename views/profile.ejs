@@ -24,8 +24,8 @@
     <h1 class="big">My Profile</h1>
 
     <div class="pf-user">
-      <div class="pf-avatar">JD</div>
-      <p class="pf-email">john@example.com</p>
+      <div class="pf-avatar"><%= user.name.charAt(0) %></div>
+      <p class="pf-email"><%= user.email %></p>
     </div>
   </header>
 
@@ -39,19 +39,20 @@
     </div>
 
     <ul class="pf-list">
-      <li><span>Name</span> John Doe</li>
-      <li><span>Email</span> john@example.com</li>
-      <li><span>Phone</span> +254 700 000 000</li>
-      <li><span>Joined</span> Oct 2026</li>
+      <li><span>Name</span> <%= user.name %></li>
+      <li><span>Email</span> <%= user.email %></li>
+      <li><span>Joined</span> <%= user.createdAt %></li>
     </ul>
 
     <div class="pf-actions">
       <a class="pf-btn" href="editprofile">Edit Profile</a>
-      <a class="pf-btn pf-btn-light" href="login">Log out</a>
+      <a class="pf-btn pf-btn-light" href="/logout" id="logout">Log out</a>
     </div>
 
   </section>
 </main>
+
+  <script src="/assets/profile.js"></script>
 
 </body>
 </html>

@@ -1,28 +1,43 @@
- const Todo = require('../model/todo');   
+ const Todo = require('../model/todo'); 
+ 
+ let user = require('../model/user');
 
+ let {protectRoute,checkUser} = require('../middleware/auth');
 
 module.exports=function(app){
     
     //display-the-todos-from-database
 
-app.get('/',function(req,res){
+app.get('/',protectRoute,async function(req,res){
 
-    Todo.find({})
-    .then(function(data){
-        console.log(data);
-       res.render('home',{todos:data}) 
+   try{
+
+
+    let data = await Todo.find({
+        owner:req.userId
     })
-    .catch(function(err){
-        console.log('you are experiencing this'+ err.message)
+
+
+    res.render('home',{
+        todos:data,
     })
+
+   }
+   catch(err){
+
+console.log('some-thing-is-not-right')
+
+   }
 
 });
 
 //recieve-data-form
 
-app.post('/todo',function(req,res){
+app.post('/todo',protectRoute,function(req,res){
 
- Todo.create(req.body)
+ Todo.create({...req.body,
+    owner:req.userId})
+
  .then(function(){
     res.redirect('/');
  })
@@ -32,7 +47,7 @@ app.post('/todo',function(req,res){
 
 });
 
-app.post('/todo/:id/delete',function(req,res){
+app.post('/todo/:id/delete',protectRoute,function(req,res){
 
     Todo.findByIdAndDelete(req.params.id)
     .then(function(){
@@ -45,7 +60,7 @@ app.post('/todo/:id/delete',function(req,res){
 
 });
 
-app.post('/todo/:id/complete',function(req,res){
+app.post('/todo/:id/complete',protectRoute,function(req,res){
 
 Todo.findByIdAndUpdate(
     req.params.id,
@@ -62,7 +77,9 @@ console.log(err.message);
 });
 
 
-app.get('/create',function(req,res){
+
+
+app.get('/create',protectRoute,function(req,res){
 
     res.render('creattask')
 
@@ -71,28 +88,14 @@ app.get('/create',function(req,res){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-app.get('/profile',function(req,res){
+app.get('/profile',protectRoute,function(req,res){
 
     res.render('profile')
 
 });
 
 
-app.get('/editprofile',function(req,res){
+app.get('/editprofile',protectRoute,function(req,res){
 
     res.render('editprofile')
 
@@ -108,20 +111,6 @@ app.get('/signup',function(req,res){
 });
 
 
-
-app.get('/forgot-password',function(req,res){
-
-    res.render('forgotpassword')
-
-});
-
-
-
-app.get('/verify',function(req,res){
-
-    res.render('verify')
-
-});
 
 
 

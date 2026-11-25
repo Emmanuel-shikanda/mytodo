@@ -17,6 +17,12 @@
 
   <form class="au-card" action="/login" method="post">
 
+       <% if (typeof error !== 'undefined') { %>
+    <p class="error-message"><%= error %></p>
+    <% } %>
+
+
+
     <div class="au-field">
       <label class="au-label" for="au-email">Email</label>
       <input class="au-input" id="au-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
@@ -29,7 +35,7 @@
 
     <div class="au-row">
       <label class="au-check"><input type="checkbox" name="remember"> Remember me</label>
-      <a class="au-link" href="forgot-password">Forgot password?</a>
+      <a class="au-link" href="forgotpassword">Forgot password?</a>
     </div>
 
     <button class="au-button" type="submit">Log in</button>
@@ -38,5 +44,7 @@
 
   </form>
 </main>
+<script src="/assets/auth.js"></script>
+
 </body>
 </html>

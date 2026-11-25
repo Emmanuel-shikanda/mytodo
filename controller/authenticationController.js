@@ -1,8 +1,38 @@
 
 let validator = require('validator')
 
+require('dotenv').config()
+
 const user =require('../model/user');
 
+let nodemailer = require("nodemailer");
+
+let jwt = require('jsonwebtoken');
+
+let bcrypt = require('bcrypt');
+
+let crypto = require('crypto');
+
+let transpoter = nodemailer.createTransport({
+        service:'gmail',
+        auth:{
+            user:process.env.EMAIL_USER,
+            pass:process.env.EMAIL_PASS,
+        }
+
+})
+
+
+
+const maxage = 3*24*60*60;
+
+let createToken = function(id){
+
+    return  jwt.sign({id},'my-secret',{
+      expiresIn:maxage
+    })
+
+}
 
 
 module.exports.signup_get=function(req,res){
@@ -60,7 +90,7 @@ try{
    }
 
    if(password !== confirm){
-   res.status(400).render('signup',{
+  return res.status(400).render('signup',{
    error:'your passwords do not match'
 
    })
@@ -85,7 +115,14 @@ try{
 
    await newUser.save();
 
-  return res.redirect('/login');
+   const token = createToken(newUser._id);
+
+   res.cookie('jwt',token,{
+    httpOnly:true,
+    maxAge:maxage * 1000
+   })
+
+  return res.redirect('/');
 
 }
 catch(err){
@@ -112,37 +149,213 @@ catch(err){
 }
 
 return res.status(500).render('signup',{
-error:'something went wrong '
+error:'something went wrong please try again'
 })
 
-    }
+}
     
-
-    
-
-
-
 }
     
 
 
 module.exports.login_get=function(req,res){
     res.render('login');
-
 }
 
 module.exports.login_post=async function(req,res){
 let {email,password} = req.body;
 
+
 try{
-let userLogin = await user.findOne({email})
-console.log(userLogin)
+
+   let userLogging = await user.login(email,password);
+
+   let token = createToken(userLogging);
+
+   res.cookie('jwt',token,{
+maxAge:maxage*1000,
+httpOnly:true
+   })
+
+   return res.redirect('/');
+   
+
 }catch(err){
-handleError(err);
-res.status(500).send(err.message);
+
+
+return  res.status(400).render('login',{
+   
+error:err.message
+
+
+})
+
 }
 
 }
+
+module.exports.logout_post = async function(req,res){
+
+res.clearCookie('jwt');
+
+res.redirect('/login')
+
+
+}
+
+module.exports.forgotPassword_get = function(req,res){
+
+    res.render('forgotpassword')
+}
+
+
+module.exports.forgotPassword_post = async function(req,res){
+
+let {email} = req.body;
+
+try{
+
+    let forgettingUser = await user.findOne({email:email});
+
+    console.log(forgettingUser);
+
+    if(!forgettingUser){
+     return res.status(404).render('forgotpassword',{
+    error:'user not found',
+})
+}
+
+let resetToken = crypto.randomBytes(32).toString('hex');
+
+let hashedToken =  crypto.createHash('sha256').update(resetToken).digest('hex')
+
+let resetTokenExpires = Date.now() + 10 * 60 * 1000;
+
+forgettingUser.resetToken = hashedToken;
+forgettingUser.resetTokenExpires = resetTokenExpires;
+
+await forgettingUser.save();
+
+let resetLink = `${req.protocal}://${req.get('host')}/verify/${resetToken}`
+
+
+let mailOptions = {
+    from:process.env.EMAIL_USER,
+    to:forgettingUser.email,
+    subject:'Password Reset',
+    text:`Click this link to rest your passwor: ${resetLink}`
+}
+
+ await transpoter.sendMail(mailOptions);
+
+res.render('forgotpassword',{
+    success:"password reset link sent to your Email"
+})
+
+}
+catch(err){
+
+console.log(err.message)
+
+
+}
+
+
+}
+
+module.exports.verify_get =async  function(req,res){
+
+let token = req.params.token;
+
+//hashed-token
+
+let hashedToken=crypto.createHash('sha256').update(token).digest('hex');
+
+let foundUser = await user.findOne({resetToken:hashedToken});
+
+if(!foundUser){
+return res.render('forgotpassword',{
+
+error:'invalid or expired reset link please request another one.'
+
+})
+}
+
+if(foundUser.resetTokenExpires<Date.now()){
+
+    return res.render('forgopassword',{
+   error:'your reset link has  expired please request another one'
+
+    })
+
+
+
+}
+
+    res.render('verify',{token:token});
+
+}
+
+module.exports.verify_post =async function(req,res){
+
+    let {password,confirmpassword,token} = req.body;
+
+    console.log("password "+password)
+    console.log("confirm-password "+confirmpassword)
+
+    if(password!== confirmpassword){
+    return res.render('verify',{
+        token:token,
+        error:"passwords do not match"
+    })
+
+    }
+
+    let hashedToken=crypto.createHash('sha256').update(token).digest('hex');
+
+    let foundUser = await user.findOne({
+        resetToken:hashedToken
+    })
+    
+
+    if(!foundUser){
+    return res.render('forgotpassword',{
+
+       error:'invalid reset link. pliz request another one'
+    })
+
+    }
+
+    if(foundUser.resetTokenExpires<Date.now()){
+    return res.render('forgotten',{
+        error:'your reset link has expired',
+    })
+
+    }
+
+    foundUser.password=password;
+
+//reset-token
+
+    foundUser.resetToken=undefined;
+    foundUser.resetTokenExpire=undefined;
+
+    await foundUser.save()
+
+
+ return res.redirect('/login')
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -17,9 +17,9 @@
 
   <form class="au-card" action="/signup" method="post">
 
-<% if (typeof error !== 'undefined') { %>
+<% if (typeof error !== 'undefined' && error.includes('general')) { %>
     <p class="error-message"><%= error %></p>
-<% } %>
+<% } %> 
 
     <div class="au-field">
       <label class="au-label" for="su-name">Full name</label>
@@ -28,11 +28,21 @@
 
     <div class="au-field">
       <label class="au-label" for="su-email">Email</label>
+       <% if (typeof error !== 'undefined' && error.includes('email')) { %>
+    <p class="error-message"><%= error %></p>
+        <% } %>
+
+
       <input class="au-input" id="su-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
     </div>
 
     <div class="au-field">
       <label class="au-label" for="su-pass">Password</label>
+<% if (typeof error !== 'undefined' && error.includes('password')) { %>
+    <p class="error-message"><%= error %></p>
+        <% } %>
+
+
       <input class="au-input" id="su-pass" type="password" name="password" placeholder="At least 8 characters" minlength="8" autocomplete="new-password" required>
     </div>
 
@@ -47,5 +57,7 @@
 
   </form>
 </main>
+<script src="/assets/auth.js"></script>
+
 </body>
 </html>
