@@ -235,12 +235,12 @@ await forgettingUser.save();
 let resetLink = `${process.env.BASE_URL}/verify/${resetToken}`;
 
 
-let {error}= {
-    from:process.env.EMAIL_USER,
+let {error}=await resend.emails.send({
+    from:"onboarding@resend.dev",
     to:forgettingUser.email,
     subject:'Password Reset request',
     text:`Click this link to rest your passwor: ${resetLink}`
-}
+})
 
 if(error){
 console.log(error);
