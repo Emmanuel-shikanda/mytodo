@@ -1,6 +1,49 @@
 
 let validator = require('validator')
 
+function resetEmailTemplate(name, link) {
+  return `
+  <div style="background:#f4f6fb;padding:32px 16px;font-family:Arial,Helvetica,sans-serif;">
+    <table align="center" width="100%" style="max-width:480px;background:#ffffff;border-radius:12px;padding:32px;">
+      <tr>
+        <td align="center" style="font-size:22px;font-weight:bold;color:#4f46e5;padding-bottom:8px;">
+          ✓ My Tasks
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size:20px;font-weight:bold;color:#111827;padding:16px 0 8px;">
+          Reset your password
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size:15px;line-height:1.6;color:#4b5563;">
+          Hi ${name || 'there'},<br><br>
+          We received a request to reset your password. Click the button below to choose a new one.
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding:28px 0;">
+          <a href="${link}"
+             style="background:#4f46e5;color:#ffffff;text-decoration:none;padding:14px 28px;border-radius:8px;font-size:16px;font-weight:bold;display:inline-block;">
+            Reset Password
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size:13px;line-height:1.6;color:#6b7280;">
+          This link expires in <b>10 minutes</b>. If you didn't request this, you can safely ignore this email.
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size:12px;color:#9ca3af;padding-top:24px;border-top:1px solid #e5e7eb;">
+          Button not working? Copy this link into your browser:<br>
+          <span style="word-break:break-all;color:#4f46e5;">${link}</span>
+        </td>
+      </tr>
+    </table>
+  </div>`;
+}
+
 let {Resend}= require('resend');
 
 
@@ -239,7 +282,7 @@ let {error}=await resend.emails.send({
     from:"onboarding@resend.dev",
     to:forgettingUser.email,
     subject:'Password Reset request',
-    text:`Click this link to rest your passwor: ${resetLink}`
+    html:resetEmailTemplate(forgettingUser.fullname,resetLink)
 })
 
 if(error){
