@@ -18,7 +18,7 @@ function resetEmailTemplate(name, link) {
       <tr>
         <td style="font-size:15px;line-height:1.6;color:#4b5563;">
           Hi ${name || 'there'},<br><br>
-          We received a request to reset your password. Copy the link below and paste it into your browser to choose a new one.
+          We received a request to reset your password. Click the link below to change your password.
         </td>
       </tr>
       <tr>
