@@ -1,11 +1,14 @@
 
 let validator = require('validator')
 
-require('dotenv').config()
+let {Resend}= require('resend');
+
+
+
+require('dotenv').config();
 
 const user =require('../model/user');
 
-let nodemailer = require("nodemailer");
 
 let jwt = require('jsonwebtoken');
 
@@ -13,14 +16,7 @@ let bcrypt = require('bcrypt');
 
 let crypto = require('crypto');
 
-let transpoter = nodemailer.createTransport({
-        service:'gmail',
-        auth:{
-            user:process.env.EMAIL_USER,
-            pass:process.env.EMAIL_PASS,
-        }
-
-})
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 
@@ -239,16 +235,22 @@ await forgettingUser.save();
 let resetLink = `${process.env.BASE_URL}/verify/${resetToken}`;
 
 
-let mailOptions = {
+let {error}= {
     from:process.env.EMAIL_USER,
     to:forgettingUser.email,
-    subject:'Password Reset',
+    subject:'Password Reset request',
     text:`Click this link to rest your passwor: ${resetLink}`
 }
 
-console.log('abouttosendmail')
+if(error){
+console.log(error);
+return res.status(500).render('forgotpassword',{
+error:'could not send email . Try again'
+});
 
- await transpoter.sendMail(mailOptions);
+}
+
+
 
  console.log('user-saved')
 
@@ -260,6 +262,10 @@ res.render('forgotpassword',{
 catch(err){
 
 console.log(err.message)
+
+res.status(500).render('forgotpassword',{
+error:'something wemt wrong try again'
+})
 
 
 }
